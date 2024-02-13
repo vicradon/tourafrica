@@ -29,7 +29,7 @@ jobs:
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./src/backend/* -r
+        run: cp -r src/backend release && zip release.zip release -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -51,7 +51,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip && mv release/* .
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
